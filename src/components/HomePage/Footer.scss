@@ -1,0 +1,39 @@
+.footer{
+    width: 100%; 
+    height: fit-content; 
+    background-color: #4cb551; 
+    padding: 25px;
+
+    .content{
+        width: 80%; 
+        height: 250px; 
+        display: flex; 
+        margin: 0 auto;
+        justify-content: space-between;
+        font-size: 20px; 
+        font-weight: bold; 
+        align-items: center; 
+        line-height: 40px; 
+        padding: 0px 20px 0px 20px;
+    }
+
+    .TongDai{
+        list-style: none; 
+        color: #fff;
+    }
+
+    .HeThong{
+        list-style: none; 
+        color: #fff;
+    }
+
+    .HoTro{
+        list-style: none; 
+        color: #fff;
+    }
+
+    .NhaThuoc{
+        list-style: none; 
+        color: #fff;
+    }
+}

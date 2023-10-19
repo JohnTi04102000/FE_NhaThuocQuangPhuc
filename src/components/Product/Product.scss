@@ -1,0 +1,106 @@
+.list-product {
+    width: 80%;
+    height: fit-content;
+    margin: 0 auto;
+    //background-color: rgb(29, 218, 209);
+  
+    .container-product {
+      display: flex;
+      width: 100%;
+      height: fit-content;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      //justify-content: center;
+  
+      .card {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 25%;
+        max-width: 20%;
+        line-height: 1.5;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 14px;
+        border: solid 1px grey;
+        border-radius: 15px;
+        margin: 0 20px 20px 20px;
+        justify-content: space-between;
+        flex-grow: 1;
+        border-color: #f2f2f2;
+  
+        &:hover{
+          border-color: #4cb551;
+        }
+  
+        img {
+          //font-size: 26px;
+          width: 100%;
+          height: auto;
+          margin: 0 auto;
+        }
+  
+        .card-title {
+          font-weight: bold;
+          font-size: 18px;
+          margin-bottom: 10px;
+          height: 70px;
+          flex-shrink: 0;
+        }
+  
+        .card-text {
+          margin-bottom: 10px;
+          flex: 1;       
+        }
+  
+        .card-vnd{
+          text-decoration: underline;
+        }
+  
+        .card-price {
+          color: #db6d2e;
+          font-weight: 600;
+          line-height: 19px;
+          margin-bottom: 10px;
+          flex: 1;
+        }
+  
+        .button-container {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          margin-top: 20px;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          margin-top: 0;
+  
+          .btn-detail{
+            border-radius: 15px;
+            padding: 7px;
+            background-color: transparent;
+            border: 2px solid #f2f2f2;
+  
+            &:hover{
+              background-color: #4cb551;
+              transition: 0.5s;
+              color: white;
+            }
+          }
+  
+          .btn-addCart{
+            border-radius: 15px;
+            padding: 7px;
+            background-color: transparent;
+            border: 2px solid #f2f2f2;
+  
+            &:hover{
+              background-color: #4cb551;
+              transition: 0.5s;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+  
