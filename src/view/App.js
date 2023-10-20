@@ -7,8 +7,12 @@ import Home from '../components/HomePage/Home';
 import Cart from '../components/Cart/Cart'
 import Product from '../components/Product/Product'
 import { ToastContainer } from "react-toastify";
+import { useSelector } from 'react-redux';
+
 
 function App() {
+  const dataRedux = useSelector(state => state.category.category_Current);
+  console.log('CHECK REDUX: ', dataRedux);
   return (
     <>
       <div className="app-container">
