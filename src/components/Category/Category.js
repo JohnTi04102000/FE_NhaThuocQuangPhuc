@@ -1,17 +1,32 @@
 import React from "react";
 import "./Category.scss";
+import {
+  changeCategory
+} from '../../redux/Actions/categoryAction'
+import { connect } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
-const Category = () => {
 
+const Category = (props) => {
+  // const changeCategory = () => {
+  //   props.changeCategory();
+  // }
+
+  const navigate = useNavigate();
+  const handleParamUpdate = (newParamValue) => {
+    // Thay đổi giá trị của `paramName` trong URL và chuyển hướng
+    navigate(`?iddm=${newParamValue}`);
+  }
   return (
     <>
       <div className="category">
         <div className="Thuoc">
           Thuốc <i className="fa-solid fa-tablets"></i>
           <div className="Thuoc-Item">
-            <ul>
-              <li>Tim mạch</li>
-              <li>Huyết áp</li>
+            <ul>           
+              {/* <li onClick={() => changeCategory()}>Tim mạch</li> */}
+              <li onClick={() => handleParamUpdate(1)}>Tim mạch</li>
+              <li onClick={() => handleParamUpdate(2)}>Huyết áp</li>
               <li>Thần kinh</li>
               <li>Xương khớp</li>
               <li>Tiêu hoá</li>
@@ -90,4 +105,17 @@ const Category = () => {
   );
 };
 
-export default Category;
+const mapStateToProps = state => {
+  return {
+    category: state.category.category,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+    changeCategory: () => dispatch(changeCategory()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

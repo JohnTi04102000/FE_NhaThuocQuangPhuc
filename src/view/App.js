@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 
 
 function App() {
-  const dataRedux = useSelector(state => state.category.category_Current);
+  const dataRedux = useSelector(state => state.category.count);
   console.log('CHECK REDUX: ', dataRedux);
   return (
     <>

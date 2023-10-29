@@ -8,24 +8,29 @@ import Carousel from "../HomePage/Carousel";
 import Product from "../Product/Product";
 import Cart from '../Cart/Cart';
 import { Button, Drawer, Space } from 'antd';
+import { useSelector } from 'react-redux';
 
 function HomeHeader() {
   const [cartCount, setCartCount] = useState(0);
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState();
+  const dataRedux = useSelector(state => state.category.count);
 
   
   useEffect(() => {
     handleCartCount();
-  }, []);
+  }, [dataRedux]);
   
   const handleCartCount = () => {
-    const count = localStorage.getItem("carts");
-    if (count) {
-      const parsedCarts = JSON.parse(count);
-      const cartCount = parsedCarts.length;
-      setCartCount(cartCount);
-    }
+    setCartCount(dataRedux);
+    // const count = localStorage.getItem("carts");
+    // if (count) {
+    //   const parsedCarts = JSON.parse(count);
+    //   const cartCount = parsedCarts.length;
+    //   setCartCount(cartCount);
+    // }
+
+    
   }
 
   const showLargeDrawer = () => {

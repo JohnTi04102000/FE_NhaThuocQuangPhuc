@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./Cart.scss";
 import { toast } from "react-toastify";
 import { Button } from "antd";
+import {
+  increaseCounter,
+  decreaseCounter,
+} from '../../redux/Actions/categoryAction'
+import { connect } from "react-redux"
 
 
 function Cart(props) {
@@ -56,7 +61,7 @@ function Cart(props) {
     } catch (e) {
       console.log(e);
     }
-    props.cartCount();
+    props.increaseCounter()
   };
 
   const removeProduct = (product) => {
@@ -78,7 +83,7 @@ function Cart(props) {
     } catch (e) {
       console.log(e);
     }
-    props.cartCount();
+    props.decreaseCounter()
   };
 
   // Trước khi render
@@ -148,4 +153,18 @@ function Cart(props) {
   );
 }
 
-export default Cart;
+const mapStateToProps = state => {
+  return {
+    count: state.category.count,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increaseCounter: () => dispatch(increaseCounter()),
+
+    decreaseCounter: () => dispatch(decreaseCounter()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

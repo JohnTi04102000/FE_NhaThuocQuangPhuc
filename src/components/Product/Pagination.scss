@@ -1,0 +1,41 @@
+.pagination-container {
+  width: 100%;
+  height: fit-content;
+
+  ul {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+    font-size: 20px;
+
+    li {     
+
+      button {
+        color: #1878ff;
+        font-family: -apple-system;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 30px;
+        padding: 0px 10px;
+        border: none;
+        background-color: transparent;
+      }
+
+      &:hover {
+        button {
+          scale: (1.3);
+          transition: 0.3s;
+          cursor: pointer;
+        }
+      }
+
+      .btn-active {
+        border: 1px solid #1878ff;
+        border-radius: 10px;
+        scale: (1.3);
+        transition: 0.2s;
+      }
+    }
+  }
+}

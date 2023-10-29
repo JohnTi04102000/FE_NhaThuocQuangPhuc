@@ -10,6 +10,8 @@ import { NavLink } from "react-router-dom";
 import { getProductById } from "../../service/ProductService";
 import { Button, Modal } from "antd";
 import Detail_Product from "./Detail_Product";
+import Pagination from "./Pagination";
+import { useLocation } from "react-router-dom";
 
 function Product(props) {
   const [listProduct, setListProduct] = useState([]);
@@ -17,21 +19,40 @@ function Product(props) {
   const [infoProduct, setInfoProduct] = useState([]);
   const [open, setOpen] = useState(false);
   const [id_Product, setId] = useState(false);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(8);
+  const location = useLocation();
 
   useEffect(() => {
-    showAllProduct();
-  }, []);
+    const params = new URLSearchParams(location.search);
+    const iddm = params.get("iddm"); // Trích xuất giá trị iddm từ query parameters
 
-  const handleOpen = (id_Product) =>{
+    if (iddm) {
+      showProductsByCategory(iddm);
+    } else {
+      showAllProduct();
+    }
+  }, [location]);
+
+  const handleOpen = (id_Product) => {
     setOpen(true);
     setId(id_Product);
-  }
+  };
 
   const showAllProduct = async () => {
     try {
       const listPro = await getAllProduct();
       setListProduct(listPro);
+    } catch (error) {
+      toast.error("Error loading products.");
+    }
+  };
+
+  const showProductsByCategory = async (id) => {
+    try {
+      const listPro = await getProductByCategory(id);
+      console.log(listPro);
+      setListProduct(listPro.data);
     } catch (error) {
       toast.error("Error loading products.");
     }
@@ -78,6 +99,18 @@ function Product(props) {
   //   }
   // }
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = listProduct.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  // Hàm chuyển trang
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <>
       <div className="title-product">
@@ -85,7 +118,7 @@ function Product(props) {
       </div>
       <div className="list-product">
         <div className="container-product">
-          {listProduct.map((item) => (
+          {currentProducts.map((item) => (
             <div className="card" id={item.id}>
               <img
                 src={"http://localhost:8080/image/" + item.img}
@@ -104,7 +137,10 @@ function Product(props) {
                 </b>
               </p>
               <div className="button-container">
-                <button className="btn-detail" onClick={() => handleOpen(item.id)}>
+                <button
+                  className="btn-detail"
+                  onClick={() => handleOpen(item.id)}
+                >
                   Xem chi tiết
                 </button>
 
@@ -127,10 +163,14 @@ function Product(props) {
         onCancel={() => setOpen(false)}
         width={1000}
       >
-        <Detail_Product
-        id={id_Product}
-        />         
+        <Detail_Product id={id_Product} />
       </Modal>
+      <Pagination
+        productsPerPage={productsPerPage}
+        totalProducts={listProduct.length}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
       <Footer />
     </>
   );

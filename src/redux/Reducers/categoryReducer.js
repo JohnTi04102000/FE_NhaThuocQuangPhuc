@@ -1,26 +1,42 @@
-import {CHANGE_CATEGORY} from '../Actions/categoryAction';
+import {
+  CHANGE_CATEGORY,
+  INCREMENT,
+  DECREMENT,
+} from "../Actions/categoryAction";
 
-    const INITIAL_STATE = {
-        category_Current: {state: 'check redux', action: 'change category'},
-    };
+const count = localStorage.getItem("carts");
+let parsedCarts = "";
+let cartCount = 0;
+if (count) {
+  parsedCarts = JSON.parse(count);
+  cartCount = parsedCarts.length;
+}
+const INITIAL_STATE = {
+  count: cartCount,
+  category: null,
+};
 
-    const categoryReducer = (state = INITIAL_STATE, action) => {
+const categoryReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case CHANGE_CATEGORY:
+      return {
+        ...state,
+        category: 'Hi',
+      };
+    case INCREMENT:
+      return {
+        ...state,
+        count: state.count + 1,
+      };
+    case DECREMENT:
+      return {
+        ...state,
+        count: state.count - 1,
+      };
 
-        switch (action.type) {
+    default:
+      return state;
+  }
+};
 
-            case CHANGE_CATEGORY:
-
-               return {
-
-                 ...state, 
-                 category_Current: 'tim mạch',
-
-               };
-
-             default: return state;
-
-        }
-
-    };
-
-    export default categoryReducer;
+export default categoryReducer;
