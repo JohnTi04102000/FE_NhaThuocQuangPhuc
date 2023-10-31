@@ -26,11 +26,16 @@ const Category = (props) => {
             <ul>           
               {/* <li onClick={() => changeCategory()}>Tim mạch</li> */}
               <li onClick={() => handleParamUpdate(1)}>Tim mạch</li>
-              <li onClick={() => handleParamUpdate(2)}>Huyết áp</li>
-              <li>Thần kinh</li>
-              <li>Xương khớp</li>
-              <li>Tiêu hoá</li>
-              <li>Da liễu</li>
+              <li onClick={() => handleParamUpdate(2)}>Bổ gan</li>
+              <li onClick={() => handleParamUpdate(3)}>Bổ não</li>
+              <li onClick={() => handleParamUpdate(4)}>Bổ phế, hô hấp</li>
+              <li onClick={() => handleParamUpdate(5)}>Hỗ trợ xương khớp</li>
+              <li onClick={() => handleParamUpdate(6)}>Hổ trợ tiêu hoá</li>
+              <li onClick={() => handleParamUpdate(7)}>Kẹo ngậm - Viên ngậm</li>
+              <li onClick={() => handleParamUpdate(8)}>Làm đẹp</li>
+              <li onClick={() => handleParamUpdate(9)}>Dầu cá - Bổ mắt</li>
+              <li onClick={() => handleParamUpdate(10)}>Vitamin và khoáng chất</li>
+              <li onClick={() => handleParamUpdate(11)}>Thảo dược tự nhiên</li>
             </ul>
           </div>
         </div>

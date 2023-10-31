@@ -12,4 +12,8 @@ const getProductByCategory = (id_category) => {
     return axios.get(`/category/${id_category}`);
 }
 
-export{getAllProduct, getProductById, getProductByCategory}
+const updateProductByID = (id_product, data) => {
+    return axios.patch(`/update-product/${id_product}`, {data});
+}
+
+export{getAllProduct, getProductById, getProductByCategory, updateProductByID}
