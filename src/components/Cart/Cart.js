@@ -30,7 +30,7 @@ function Cart(props) {
     };
 
     fetchCartFromLocalStorage();
-  }, []);
+  });
 
   const formatCurrency = (price) => {
     const formatter = new Intl.NumberFormat("vi-VN", {

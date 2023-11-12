@@ -9,9 +9,11 @@ import Product from "../Product/Product";
 import Cart from '../Cart/Cart';
 import { Button, Drawer, Space } from 'antd';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function HomeHeader() {
   const [cartCount, setCartCount] = useState(0);
+  const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [size, setSize] = useState();
   const dataRedux = useSelector(state => state.category.count);
@@ -29,8 +31,6 @@ function HomeHeader() {
     //   const cartCount = parsedCarts.length;
     //   setCartCount(cartCount);
     // }
-
-    
   }
 
   const showLargeDrawer = () => {
@@ -40,6 +40,12 @@ function HomeHeader() {
   const onClose = () => {
     setOpen(false);
   };
+
+  const navigate = useNavigate();
+  const handleParamUpdate = (newParamValue) => {
+    // Thay đổi giá trị của `paramName` trong URL và chuyển hướng
+    navigate(`?value=${newParamValue}`);
+  }
 
   return (
     <>
@@ -91,8 +97,8 @@ function HomeHeader() {
               <h2>Pharmacity</h2>
             </div>
             <div className="header_search-input">
-              <Input placeholder="Tìm theo bệnh, tên thuốc,..." />
-              <button className="header_search_button">
+              <Input placeholder="Tìm theo bệnh, tên thuốc,..." onChange={(event) => setValue(event.target.value)}/>
+              <button className="header_search_button" onClick={() => {handleParamUpdate(value)}}>
                 <i className="fa-solid fa-magnifying-glass"></i>
                 Tìm
               </button>

@@ -3,6 +3,7 @@ import "./Product.scss";
 import {
   getAllProduct,
   getProductByCategory,
+  getProductBySearch
 } from "../../service/ProductService";
 import { toast } from "react-toastify";
 import Footer from "../HomePage/Footer";
@@ -10,8 +11,14 @@ import { NavLink } from "react-router-dom";
 import { getProductById } from "../../service/ProductService";
 import { Button, Modal } from "antd";
 import Detail_Product from "./Detail_Product";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 import { useLocation } from "react-router-dom";
+import {
+  increaseCounter,
+  decreaseCounter,
+} from '../../redux/Actions/categoryAction';
+import { connect } from "react-redux";
+import { Pagination } from 'antd';
 
 function Product(props) {
   const [listProduct, setListProduct] = useState([]);
@@ -22,17 +29,21 @@ function Product(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(8);
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const iddm = params.get("iddm"); 
+  const value = params.get("value");
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const iddm = params.get("iddm"); // Trích xuất giá trị iddm từ query parameters
-
     if (iddm) {
       showProductsByCategory(iddm);
-    } else {
+    }
+    else if (value) {
+      showProductsBySearch(value);
+    }
+     else {
       showAllProduct();
     }
-  }, [location]);
+  }, [iddm, value]);
 
   const handleOpen = (id_Product) => {
     setOpen(true);
@@ -57,6 +68,15 @@ function Product(props) {
       toast.error("Error loading products.");
     }
   };
+  const showProductsBySearch = async (value) => {
+    try {
+      const listPro = await getProductBySearch(value);
+      console.log(listPro);
+      setListProduct(listPro);
+    } catch (error) {
+      toast.error("Error loading products.");
+    }
+  };
   const handleAddCart = (product) => {
     const checkCart = localStorage.getItem("carts");
     let cartTmp = [];
@@ -74,8 +94,8 @@ function Product(props) {
       setListCart(cartTmp);
       localStorage.setItem("carts", JSON.stringify(cartTmp));
     }
-
     props.cartCount();
+    props.increaseCounter();
   };
 
   const formatCurrency = (price) => {
@@ -165,15 +185,30 @@ function Product(props) {
       >
         <Detail_Product id={id_Product} />
       </Modal>
-      <Pagination
+      <Pagination defaultCurrent={1} />;
+      {/* <Pagination
         productsPerPage={productsPerPage}
         totalProducts={listProduct.length}
         currentPage={currentPage}
         paginate={paginate}
-      />
+      /> */}
       <Footer />
     </>
   );
 }
+const mapStateToProps = state => {
+  return {
+    count: state.category.count,
+  }
+}
 
-export default Product;
+const mapDispatchToProps = dispatch => {
+  return {
+    increaseCounter: () => dispatch(increaseCounter()),
+
+    decreaseCounter: () => dispatch(decreaseCounter()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product)
+

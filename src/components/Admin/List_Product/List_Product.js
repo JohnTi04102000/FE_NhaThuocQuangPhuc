@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { getAllProduct, updateProductByID } from "../../../service/ProductService";
-import { Table, Space, Popconfirm, Tag } from "antd";
+import { getAllProduct, updateProductByID, deleteProductByID, createProduct, uploadFile } from "../../../service/ProductService";
+import { Table, Space, Popconfirm, Tag, Button } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import './List_Product.scss';
 import DrawerUpdateProduct from "./DrawerUpdateProduct";
+import DrawerCreateProduct from "./DrawerCreateProduct";
 import { toast } from "react-toastify";
 
 function List_Product() {
   const [listProduct, setListProduct] = useState([]);
   const [product, setProduct] = useState(null);
   const [open, setOpen] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
+
   const showDrawer = () => {
     setOpen(true);
   };
+
+  const showDrawerCreate = () => {
+    setOpenCreate(true);
+  };
   const onClose = () => {
     setOpen(!open);
+  };
+
+  const onCloseCreate = () => {
+    setOpenCreate(!openCreate);
   };
 
   useEffect(() => {
@@ -31,8 +43,17 @@ function List_Product() {
     }
   };
 
-  const handleDeleteProduct = (id) =>{
-
+  const handleDeleteProduct = async (id) =>{
+    try{
+      let result = await deleteProductByID(id);
+      if(result) {
+        toast.success(result.message);
+        getProduct();
+      }
+    }
+    catch(err) {
+      console.error(err);
+    }
   }
 
   const handleUpdateProduct = async (id, data) => {
@@ -47,6 +68,35 @@ function List_Product() {
     catch(err){
       console.log(err);
     }
+  }
+
+  const handleCreateProduct = async (data) => {
+    showDrawerCreate();
+    try{
+      let result = await createProduct(data);
+      if(result)
+      {
+        toast.success("Thêm sản phẩm thành công");
+        getProduct()
+      }
+      else
+      {
+        toast.error("Thêm sản phẩm thất bại")
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
+  const handleUploadFile = async (data) => {
+    const file = data;
+    if (!file) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append("image-product", file);
+    await uploadFile(formData);
   }
 
 
@@ -123,12 +173,21 @@ function List_Product() {
   return (
     <>
       <h1>DANH SÁCH SẢN PHẨM</h1>
+      <Button type="primary" onClick={showDrawerCreate} icon={<PlusOutlined />}>
+        Thêm sản phẩm
+      </Button>
       <Table columns={columns} dataSource={listProduct} />;
       <DrawerUpdateProduct
       openDrawer={open}
       closeDrawer={onClose}
       infoProduct={product}
       handleUpdate={handleUpdateProduct}
+      />
+      <DrawerCreateProduct
+      openDrawerCreate={openCreate}
+      closeDrawerCreate={onCloseCreate}
+      handleCreate={handleCreateProduct}
+      uploadFile={handleUploadFile}
       />
     </>
   );
