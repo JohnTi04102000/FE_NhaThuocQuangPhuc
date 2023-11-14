@@ -13,6 +13,9 @@ import { Menu } from "antd";
 import List_Category from "./List_Category/List_Category";
 import List_Product from "./List_Product/List_Product";
 import List_Order from "./List_Order/ListOrder";
+import Order_Accept from "./List_Order/Order_Accept";
+import Order_NotAccept from "./List_Order/Order_NotAccept";
+import Order_Complete from "./List_Order/Order_Complete";
 import { NavLink } from "react-router-dom";
 // import PrivatePage from "../../HOC/PrivatePage";
 
@@ -45,10 +48,9 @@ const items = [
   },
   getItem("Quản lí đơn hàng", "sub4", <ShoppingCartOutlined />, [
     getItem(<div>Danh sách đơn hàng</div>, "10"),
-    getItem(<div>Facility</div>, "11"),
-    getItem(<div>Equipment</div>, "12"),
-    getItem(<div>Tool</div>, "13"),
-    getItem(<div>Assets risk predictor</div>, "14"),
+    getItem(<div>Đơn hàng chờ duyệt</div>, "11"),
+    getItem(<div>Đơn hàng đã duyệt</div>, "12"),
+    getItem(<div>Đơn hàng đã giao</div>, "13"),
   ]),
   {
     type: "divider",
@@ -88,10 +90,19 @@ function Dashboard() {
       contentToDisplay = <List_Category />;
       break;
     case "6":
-      contentToDisplay = <List_Product/>;
+      contentToDisplay = <List_Product />;
       break;
-    case '10':
-      contentToDisplay = <List_Order/>;
+    case "10":
+      contentToDisplay = <List_Order />;
+      break;
+    case "11":
+      contentToDisplay = <Order_NotAccept />;
+      break;
+    case "12":
+      contentToDisplay = <Order_Accept />;
+      break;
+    case "13":
+      contentToDisplay = <Order_Complete />;
       break;
     default:
       contentToDisplay = <List_Category />;

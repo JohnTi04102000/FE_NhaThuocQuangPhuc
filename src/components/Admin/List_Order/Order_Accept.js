@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllOrders } from "../../../service/OrderService";
+import { getAllOrderAccept } from "../../../service/OrderService";
 import { Table, Tag, Space, Popconfirm } from "antd";
 
 function List_Order() {
@@ -7,7 +7,7 @@ function List_Order() {
 
   useEffect(() => {
     const getData = async () => {
-      let data = await getAllOrders();
+      let data = await getAllOrderAccept();
       if (data) {
         data.map((item) => {
           return (item.ngayMuaHang = getFormattedDate(
@@ -54,11 +54,32 @@ function List_Order() {
       dataIndex: "trangThai",
       key: "trangThai"
     },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Popconfirm
+              title="Giao dịch đơn hàng"
+              description="Xác nhận đã giao đơn hàng này thành công"
+            //   onConfirm={() => {
+            //     handleDeleteProduct(record.id);
+            //   }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button >
+              <i class="fa-solid fa-truck-fast"></i>
+              </button>
+            </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   return (
     <>
-    <h1>DANH SÁCH TẤT CẢ ĐƠN HÀNG</h1>
+        <h1>DANH SÁCH ĐƠN HÀNG ĐÃ DUYỆT</h1>
       <Table dataSource={listOrder} columns={columns} />;
     </>
   );
