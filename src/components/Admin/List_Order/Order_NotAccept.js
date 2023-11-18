@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { getAllOrderNotAccept } from "../../../service/OrderService";
-import { Table, Tag, Space, Popconfirm } from "antd";
+import {
+  getAllOrderNotAccept,
+  getUserById,
+} from "../../../service/OrderService";
+import { Table, Tag, Space, Popconfirm, Modal, Button } from "antd";
+import ModalInfo from "./Modal_InfoUser";
 
 function List_Order() {
   const [listOrder, setListOrder] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [info_User, setInfoUser] = useState([]);
+  const [id_Order, setIdOrder] = useState("");
 
   useEffect(() => {
-    const getData = async () => {
-      let data = await getAllOrderNotAccept();
-      if (data) {
-        data.map((item) => {
-          return (item.ngayMuaHang = getFormattedDate(
-            new Date(item.ngayMuaHang)
-          ));
-        });
-        setListOrder(data);
-      }
-    };
     getData();
   }, []);
+
+  const getData = async () => {
+    let data = await getAllOrderNotAccept();
+    if (data) {
+      data.map((item) => {
+        return (item.ngayMuaHang = getFormattedDate(
+          new Date(item.ngayMuaHang)
+        ));
+      });
+      setListOrder(data);
+    }
+  };
 
   const getFormattedDate = (date) => {
     let year = date.getFullYear();
@@ -28,9 +36,26 @@ function List_Order() {
     return `${month} - ${day} - ${year}`;
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(!isModalOpen);
+    getData();
+  };
+
+  const getUser = async (info) => {
+    setIdOrder(info.id);
+    let info_User = await getUserById(info.idKH);
+    if (info_User) {
+      setInfoUser(info_User);
+      showModal();
+    }
+  };
+
   const columns = [
     {
-      title: "Id",
+      title: "Mã đơn hàng",
       dataIndex: "id",
       key: "id",
     },
@@ -52,26 +77,21 @@ function List_Order() {
     {
       title: "Trạng thái đơn hàng",
       dataIndex: "trangThai",
-      key: "trangThai"
+      key: "trangThai",
     },
     {
-      title: "Action",
+      title: "Duyệt đơn hàng",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Popconfirm
-              title="Duyệt đơn hàng"
-              description="Xác nhận duyệt đơn hàng này"
-            //   onConfirm={() => {
-            //     handleDeleteProduct(record.id);
-            //   }}
-              okText="Yes"
-              cancelText="No"
-            >
-              <button >
-              <i class="fa-solid fa-boxes-packing"></i>
-              </button>
-            </Popconfirm>
+          <button
+            onClick={() => {
+              getUser(record);
+            }}
+          >
+            <i class="fa-solid fa-boxes-packing"></i>           
+          </button>
+          Xem chi tiết
         </Space>
       ),
     },
@@ -79,8 +99,14 @@ function List_Order() {
 
   return (
     <>
-        <h1>DANH SÁCH ĐƠN HÀNG ĐANG CHỜ DUYỆT</h1>
+      <h1>DANH SÁCH ĐƠN HÀNG ĐANG CHỜ DUYỆT</h1>
       <Table dataSource={listOrder} columns={columns} />;
+      <ModalInfo
+        showInfo={isModalOpen}
+        closeInfo={handleCancel}
+        info_User={info_User}
+        info_Order={id_Order}
+      />
     </>
   );
 }

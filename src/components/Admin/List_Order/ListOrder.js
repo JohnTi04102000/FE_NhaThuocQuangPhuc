@@ -14,7 +14,8 @@ function List_Order() {
             new Date(item.ngayMuaHang)
           ));
         });
-        setListOrder(data);
+        let data_revert = data.reverse();
+        setListOrder(data_revert);
       }
     };
     getData();

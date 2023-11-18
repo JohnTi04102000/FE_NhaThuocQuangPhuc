@@ -19,7 +19,7 @@ const DrawerUpdateProduct = (props) => {
       onFill();
       console.log("pro: " + JSON.stringify(product));
     }
-  }, [props.infoProduct, ]);
+  }, [props.infoProduct]);
 
   const updateProduct = () => {
     props.closeDrawer();
