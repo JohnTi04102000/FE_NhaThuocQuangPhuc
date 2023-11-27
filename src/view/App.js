@@ -4,8 +4,9 @@ import {
   Route
 } from "react-router-dom";
 import Home from '../components/HomePage/Home';
-import Cart from '../components/Cart/Cart'
-import Admin from '../components/Admin/Admin'
+import Cart from '../components/Cart/Cart';
+import Admin from '../components/Admin/Admin';
+import Login from '../components/Login/Login'
 import { ToastContainer } from "react-toastify";
 import { useSelector } from 'react-redux';
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/" element={<Home/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path='/admin' element={<Admin/>}></Route>
+          <Route path='/login' element={<Login/>}></Route>
         </Routes>
       </div>
       <ToastContainer

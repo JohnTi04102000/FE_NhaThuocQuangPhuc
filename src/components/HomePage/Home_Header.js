@@ -10,6 +10,7 @@ import Cart from '../Cart/Cart';
 import { Button, Drawer, Space } from 'antd';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 function HomeHeader() {
   const [cartCount, setCartCount] = useState(0);
@@ -25,12 +26,10 @@ function HomeHeader() {
   
   const handleCartCount = () => {
     setCartCount(dataRedux);
-    // const count = localStorage.getItem("carts");
-    // if (count) {
-    //   const parsedCarts = JSON.parse(count);
-    //   const cartCount = parsedCarts.length;
-    //   setCartCount(cartCount);
-    // }
+  }
+
+  const handleOrder = () => {
+    toast.success("Mua hàng thành công!")
   }
 
   const showLargeDrawer = () => {
@@ -129,14 +128,6 @@ function HomeHeader() {
         size={size}
         onClose={onClose}
         open={open}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button type="primary" onClick={onClose}>
-              OK
-            </Button>
-          </Space>
-        }
       >
         <Cart
         cartCount={handleCartCount}

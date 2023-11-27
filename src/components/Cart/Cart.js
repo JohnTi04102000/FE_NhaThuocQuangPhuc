@@ -6,12 +6,21 @@ import {
   increaseCounter,
   decreaseCounter,
 } from '../../redux/Actions/categoryAction'
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import Order from '../Order/Order'
 
 
 function Cart(props) {
   const [listCart, setListCart] = useState([]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleShowModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
 
   useEffect(() => {
@@ -21,8 +30,6 @@ function Cart(props) {
         if (carts) {
           let parsedCarts = JSON.parse(carts);
           setListCart(parsedCarts);
-        } else {
-          toast.info("Giỏ hàng trống!");
         }
       } catch (e) {
         console.log(e);
@@ -30,7 +37,7 @@ function Cart(props) {
     };
 
     fetchCartFromLocalStorage();
-  });
+  }, []);
 
   const formatCurrency = (price) => {
     const formatter = new Intl.NumberFormat("vi-VN", {
@@ -55,8 +62,6 @@ function Cart(props) {
         parsedCarts.push(product);
         setListCart(parsedCarts);
         localStorage.setItem("carts", JSON.stringify(parsedCarts));
-      } else {
-        toast.info("Giỏ hàng trống!");
       }
     } catch (e) {
       console.log(e);
@@ -77,8 +82,6 @@ function Cart(props) {
         }
         setListCart(parsedCarts);
         localStorage.setItem("carts", JSON.stringify(parsedCarts));
-      } else {
-        toast.info("Giỏ hàng trống!");
       }
     } catch (e) {
       console.log(e);
@@ -107,6 +110,10 @@ function Cart(props) {
         <div className="remove-cart btn btn-info">
           <Button variant="contained" onClick={removeAllCart}>
             <strong>Xoá giỏ hàng</strong> &nbsp; <i className="fa-solid fa-trash"></i>
+          </Button>
+
+          <Button variant="contained" onClick={handleShowModal}>
+            <strong>Đặt hàng</strong> &nbsp; <i class="fa-regular fa-credit-card"></i>
           </Button>
         </div>
         <div className="list-cart">
@@ -149,6 +156,10 @@ function Cart(props) {
           )}
         </div>
       </div>
+      <Order
+      showModal={isModalOpen}
+      closeModal={handleCloseModal}
+      />
     </>
   );
 }

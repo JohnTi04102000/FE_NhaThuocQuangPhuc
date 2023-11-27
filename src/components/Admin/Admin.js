@@ -17,7 +17,7 @@ import Order_Accept from "./List_Order/Order_Accept";
 import Order_NotAccept from "./List_Order/Order_NotAccept";
 import Order_Complete from "./List_Order/Order_Complete";
 import { NavLink } from "react-router-dom";
-// import PrivatePage from "../../HOC/PrivatePage";
+import PrivatePage from "../HOC/PrivatePage";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -133,4 +133,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default PrivatePage(Dashboard);

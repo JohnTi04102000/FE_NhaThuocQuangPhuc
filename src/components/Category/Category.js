@@ -21,7 +21,7 @@ const Category = (props) => {
     <>
       <div className="category">
         <div className="Thuoc">
-          Thuốc <i className="fa-solid fa-tablets"></i>
+        Thực phẩm chức năng <i className="fa-solid fa-tablets"></i>
           <div className="Thuoc-Item">
             <ul>           
               {/* <li onClick={() => changeCategory()}>Tim mạch</li> */}
@@ -39,29 +39,14 @@ const Category = (props) => {
             </ul>
           </div>
         </div>
-        <div className="TPCN">
-          Thực phẩm chức năng <i className="fa-solid fa-prescription-bottle"></i>
-          <div className="TPCN-Item">
-            <ul>
-              <li>Bổ gan</li>
-              <li>Bổ não</li>
-              <li>Kẹo ngậm</li>
-              <li>Bổ phế</li>
-              <li>Dầu cá</li>
-              <li>Vitamin</li>
-            </ul>
-          </div>
-        </div>
         <div className="DCYT">
-          Dụng cụ y tế <i className="fa-solid fa-stethoscope"></i>
+          Thiết bị y tế <i className="fa-solid fa-stethoscope"></i>
           <div className="DCYT-Item">
             <ul>
-              <li>Miếng dán hạ sốt</li>
-              <li>Khẩu trang</li>
-              <li>Nhiệt kế</li>
-              <li>Máy đo huyết áp</li>
-              <li>Kit test covid</li>
-              <li>Nước muối - Bông gòn</li>
+              <li onClick={() => handleParamUpdate(14)}>Miếng dán hạ sốt</li>
+              <li onClick={() => handleParamUpdate(17)}>Khẩu trang</li>
+              <li onClick={() => handleParamUpdate(16)}>Các loại que thử</li>
+              <li onClick={() => handleParamUpdate(15)}>Bông gòn - Băng gạc</li>
             </ul>
           </div>
         </div>
